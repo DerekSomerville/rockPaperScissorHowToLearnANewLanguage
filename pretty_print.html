@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<body>
+<style>
+p.monospace {
+  font-family: "Courier New", Courier, monospace
+}
+</style>
+<h2>Pretty Print</h2>
+ 
+<form >
+<h2>Input Data</h2>
+<textarea rows="10" cols="50" id="data">Game,Release Date,Developer,Price
+DOOM,1993,id Software,£9.99
+Worms,1995,Team17,£9.99
+System Shock 2,1999,Irrational Games,£12.99
+Deus Ex,2000,Ion Storm,£9.99
+Assassin's Creed,2007,Ubisoft Montreal,£15.99
+Castlevania,1986,Konami,£9.99
+The Sims,2000,Maxis,£12.99
+God of War,2005,SCE,£19.99</textarea>
+
+
+  <pre id="result" class="monospace" ><br></pre>
+  <input type="button" value="Print" onclick="display()">
+</form>
+ 
+<script>
+function createLine(lineLength){
+  var line = "";
+  for (i = 0; i < lineLength; i++){
+    line += "-";
+    }
+  return line
+  }
+
+function appendSpace(word,lineLength){
+  var line = word
+  for (i = 0; i < (lineLength - word.length ); i++){
+    line += " "
+    }
+  line = line.concat(" |");
+  //line = line.replace("-"," ");
+  return line
+  }
+
+function display() {
+  var result = "<h2>Output</h2><br>";
+  var divideLine = "";
+  var headerString = "";
+  var lineString = "";
+  var listOfColumns;
+  var columnMax = [];
+  var header = [];
+  var lines = document.getElementById("data").innerHTML.split(/\r?\n/);
+  for (a = 0; a < lines.length; a++) {
+    listOfColumns = lines[a].split(",")
+    for (columnCount = 0; columnCount < listOfColumns.length; columnCount++){
+      if (a==0){   
+        header.push(listOfColumns[columnCount]);
+        columnMax.push(listOfColumns[columnCount].length);
+        }
+      else {
+        if (columnMax[columnCount] < listOfColumns[columnCount].length){
+          columnMax[columnCount] = listOfColumns[columnCount].length;
+          }
+        }
+    }
+  }
+  for (columnCount = 0; columnCount < header.length; columnCount++){
+    if (columnCount == 0){
+      divideLine += "+-" + createLine(columnMax[columnCount]);
+      headerString += "| " + appendSpace(header[columnCount],columnMax[columnCount]);
+      }
+    else {
+      divideLine += "-+-" + createLine(columnMax[columnCount]);
+      headerString += " " + appendSpace(header[columnCount],columnMax[columnCount]);
+      }
+  }
+  divideLine += "-+";
+  result += divideLine + "<br>";
+  result += headerString + "<br>";
+  result += divideLine + "<br>";
+  for (a = 1; a < lines.length; a++) {
+    listOfColumns = lines[a].split(",")
+    lineString = ""
+    for (columnCount = 0; columnCount < listOfColumns.length; columnCount++){
+      if (columnCount == 0){
+        lineString += "| " + appendSpace(listOfColumns[columnCount],columnMax[columnCount]);
+      }
+      else {
+        lineString += " " + appendSpace(listOfColumns[columnCount],columnMax[columnCount]);
+      }
+    }
+    result += lineString + "<br>";
+  }
+  result += divideLine + "<br>";
+  document.getElementById("result").innerHTML = result;
+}
+</script>
+
+
+</body>
+ 
+</html>

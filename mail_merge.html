@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Input Data</h2>
+<textarea id="data" rows=5 columns=50 >name,age
+Quintin,51
+Derek,47
+Jack,23</textarea><br>
+
+<h2>Template</h2>
+<textarea id="template" rows=5 columns=50 >Hello, my name is %%name%% and I'm %%age%%. All the best %%name%%.</textarea><br>
+
+<h2>Result</h2>
+<pre id="result"></pre>
+
+<button onclick="myFunction()">Merge Data to Template</button>
+
+<script>
+function myFunction() {
+  var result ="";
+  var template = document.getElementById("template").innerHTML;
+  var lines = document.getElementById("data").innerHTML.split(/\r?\n/);
+  var columns;
+  var headers = [];
+  var tempString;
+  
+  for (i = 0; i < lines.length; i++){
+    columns = lines[i].split(",");
+    tempString = template;
+    for (col = 0; col < columns.length; col++){
+      if (i == 0){
+        headers.push(columns[col]);
+      }
+      else{
+        tempString = tempString.split("%%" + headers[col] + "%%").join(columns[col]);
+      }
+      ;
+    }
+    if (i > 0 ){
+      result += tempString + "<br>";
+    }
+  }
+  
+  document.getElementById("result").innerHTML = result;
+}
+</script>
+
+</body>
+</html>
+

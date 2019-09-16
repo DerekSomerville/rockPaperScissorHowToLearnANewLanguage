@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Rock, Paper or Scissors?</h2>
+ 
+<form >
+  Please select game to play: <select id="game" onchange="changeGame()">
+    <option value="">Rock, Paper Scissors</option>
+    <option value="">Star Wars</option>
+  </select><br>
+  Please select weapon to use: <select id="weapon">
+    <option value="">Blank</option>
+  </select>
+  <br>
+  <P id="result"><br></p>
+  <br>
+  <input type="button" value="Play" onclick="play()">
+</form>
+ 
+ 
+<script>
+var starWarsWinner = {
+"Emperor" : "Luke Skywalker",
+"Darth Vader" : "Emperor",
+"Luke Skywalker" : "Darth Vader"
+};
+var rockWinner = {
+"Scissors" : "Paper",
+"Paper" : "Rock",
+"Rock" : "Scissors"
+};
+ 
+var weaponWinner = rockWinner;
+var weaponList = []
+ 
+function populateList() {
+  var weapons = document.getElementById("weapon");
+  weapons.innerText = null
+  weaponList = [];
+  for (var item in weaponWinner){
+    var option = document.createElement("option");
+    option.text = item;
+    weapons.add(option);
+    weaponList.push(item);
+  }
+} 
+ 
+populateList();
+ 
+function changeGame(){
+  if (document.getElementById("game").selectedIndex == 0)
+    weaponWinner = rockWinner;
+  else
+    weaponWinner = starWarsWinner;
+  populateList()
+}
+ 
+function play() {
+  var selection;
+  var userWeapon;
+  var computerWeapon;
+  var results;
+  selection = document.getElementById("weapon").selectedIndex;
+  userWeapon = weaponList[selection];
+  computerWeapon = weaponList[Math.floor(Math.random()*3)];
+  if (userWeapon == computerWeapon)
+    result = 'Draw - you both choose ' + userWeapon;
+  else if (weaponWinner[userWeapon] == computerWeapon)
+    result = 'You win ' + userWeapon + ' beats ' + computerWeapon;
+  else if (weaponWinner[computerWeapon] == userWeapon)
+    result = 'Computer wins ' + computerWeapon + ' beats ' + userWeapon;;
+  document.getElementById("result").innerHTML = result;
+}
+</script>
+
+</body>
+ 
+</html>
