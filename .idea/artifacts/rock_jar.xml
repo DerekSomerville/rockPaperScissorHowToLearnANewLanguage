@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="rock:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/rock_jar</output-path>
+    <root id="archive" name="rock.jar">
+      <element id="module-output" name="rock" />
+    </root>
+  </artifact>
+</component>
