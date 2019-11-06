@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 /*using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,42 +6,55 @@ using System.Threading.Tasks;
 */
 namespace SoloLearn
 {
-    class Program
+    class rock
     {
-        static int requestPlay(String[] weapons)
+        static string generateRequest(String[] weapons)
         {
-            String display = "Please select";
+            String request = "Please select";
             int i = 0;
             foreach (string weapon in weapons)
             {
                 i++;
-                display += " " + i + ". " + weapon;
+                request += " " + i + ". " + weapon;
             }
-            Console.WriteLine(display);
+            request += " 4. Exit";
+            return request;
+        }
+        static int requestPlay(String[] weapons)
+        {
+            String request;
+            request = generateRequest(weapons);
+            Console.WriteLine(request);
 
             int userWeapon = Convert.ToInt32(Console.ReadLine()) - 1;
 
             return userWeapon;
         }
-
-        static void determineWinner(String[] weaponList, int userWeapon, int computerWeapon)
+        static void displayWinner(string winner)
         {
+            Console.WriteLine(winner);
+        }
+        static string determineWinner(String[] weaponList, int userWeapon, int computerWeapon)
+        {
+            String winner;
             if (userWeapon == computerWeapon)
             {
-                Console.WriteLine("Draw both selected " + weaponList[computerWeapon]);
+                winner = "Draw both selected " + weaponList[computerWeapon];
             }
             else if ((userWeapon + 1) % weaponList.Length == computerWeapon)
             {
-                Console.WriteLine("You win and beats the computer's " + weaponList[computerWeapon]);
+                winner = "You win and beat the computer's " + weaponList[computerWeapon];
             }
             else if ((computerWeapon + 1) % weaponList.Length == userWeapon)
             {
-                Console.WriteLine("Computer wins with " + weaponList[computerWeapon]);
+                winner = "Computer wins with " + weaponList[computerWeapon];
             }
             else
             {
-                Console.WriteLine("Please select 1. Rock, 2. Scissors or 3. Paper");
+                winner = "Please select 1. Rock, 2. Scissors or 3. Paper";
             }
+
+            return winner;
 
         }
 
@@ -52,13 +65,12 @@ namespace SoloLearn
             while (userWeapon < weaponList.Length)
             {
                 int computerWeapon;
+                string winner;
                 Random random = new Random();
                 computerWeapon = random.Next(0, weaponList.Length -1);
 
-                Console.WriteLine("Computer selected " + weaponList[computerWeapon]);
-                Console.WriteLine("You selected " + weaponList[userWeapon]);
-
-                determineWinner(weaponList, userWeapon, computerWeapon);
+                winner = determineWinner(weaponList, userWeapon, computerWeapon);
+                displayWinner(winner);
                 userWeapon = requestPlay(weaponList);
             }
         }
