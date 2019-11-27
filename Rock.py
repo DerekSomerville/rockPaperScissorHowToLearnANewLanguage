@@ -2,12 +2,12 @@ from random import randint
 
 def determineWinner(player,computer):
     if player == computer:
-        print("Draw")
+        result = "Draw"
     elif (player + 1)%3 == computer:
-        print("player wins")
+        result = "Player wins"
     elif (computer + 1)%3 == player:
-        print("Computer Wins")
-
+        result = "Computer Wins"
+    return result
 
 def getUserChoice(weapons):
     for counter in range(len(weapons)):
@@ -38,7 +38,8 @@ def main():
     player = getUserChoice(weapon)
     while player in [0,1,2]:
         computer = getComputerChoice(weapon)
-        determineWinner(player,computer)
+        result = determineWinner(player,computer)
+        print(result)
         player = getUserChoice(weapon)
 
-main()
+#main()
